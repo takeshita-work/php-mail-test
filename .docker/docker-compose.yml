@@ -1,0 +1,13 @@
+version: '3'
+services:
+  apache-php:
+    image: takeshitawork/web-server-php:apache-php${PHP_VERSION}
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - "${APP_DIR}:/var/www"
+  smtp:
+    image: takeshitawork/web-server-php:mailcatcher
+    ports:
+    - "1080:1080"
