@@ -1,17 +1,21 @@
 <?php
-require 'PHPMailer-6.9.3/src/Exception.php';
-require 'PHPMailer-6.9.3/src/PHPMailer.php';
-require 'PHPMailer-6.9.3/src/SMTP.php';
+require 'libs/vendor/PHPMailer-6.9.3/src/Exception.php';
+require 'libs/vendor/PHPMailer-6.9.3/src/PHPMailer.php';
+require 'libs/vendor/PHPMailer-6.9.3/src/SMTP.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
+require 'libs/loadDotEnv.php';
+dotenv\loadDotEnv(__DIR__ . '/.env');
 
 require '_basicAuth.php'; //基本認証
 
 // 初期値
-$defaultTo         = 'test.terimukuri@gmail.com';
-$defaultSMTPHost   = 'smtp.example.com';
-$defaultSMTPPort   = 587;
-$defaultSMTPSecure = 'tls';
+$defaultTo         = dotenv\env('DEFAULT_TO', 'example@example.com');
+$defaultSMTPHost   = dotenv\env('DEFAULT_SMTP_HOST', 'smtp.example.com');
+$defaultSMTPPort   = dotenv\env('DEFAULT_SMTP_PORT', 587);
+$defaultSMTPSecure = dotenv\env('DEFAULT_SMTP_SECURE', '');
+$defaultSMTPUser   = dotenv\env('DEFAULT_FROM', '');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $to         = !empty($_POST['to']) ? $_POST['to'] : $defaultTo;
@@ -19,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $smtpHost   = !empty($_POST['smtp_host']) ? $_POST['smtp_host'] : $defaultSMTPHost;
     $smtpPort   = !empty($_POST['smtp_port']) ? (int)$_POST['smtp_port'] : $defaultSMTPPort;
-    $smtpUser   = !empty($_POST['smtp_user']) ? $_POST['smtp_user'] : '';
+    $smtpUser   = !empty($_POST['smtp_user']) ? $_POST['smtp_user'] : $defaultSMTPUser;
     $smtpPass   = !empty($_POST['smtp_pass']) ? $_POST['smtp_pass'] : '';
     $smtpSecure = isset($_POST['smtp_secure']) ? $_POST['smtp_secure'] : $defaultSMTPSecure;
 
@@ -66,9 +70,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $returnPath = '';
     $smtpHost   = $defaultSMTPHost;
     $smtpPort   = $defaultSMTPPort;
-    $smtpUser   = '';
+    $smtpUser   = $defaultSMTPUser;
     $smtpPass   = '';
-    $smtpSecure = 'tls';
+    $smtpSecure = $defaultSMTPSecure;
     $from       = '';
 }
 ?>

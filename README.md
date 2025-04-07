@@ -19,23 +19,33 @@
 |   |-- PHPMailer5.2
 |   |   `-- html
 |   |       |-- .mail-test
-|   |       |   |-- PHPMailer-6.9.3
+|   |       |   |-- libs
+|   |       |   |   |-- vendor/PHPMailer-6.9.3
+|   |       |   |   `-- loadDotEnv.php
+|   |       |   |-- _basicAuth.php
+|   |       |   |-- .env                       ... .env.sample をコピーして作成
+|   |       |   |-- .env.sample                ... メール送信関連の設定
 |   |       |   |-- .htaccess
 |   |       |   |-- index.php
-|   |       |   |-- send_mail_sendmail.php ... Sendmail でメールを送信
-|   |       |   `-- send_mail_smtp.php     ... SMTP認証 でメールを送信
+|   |       |   |-- send_mail_sendmail.php     ... Sendmail でメールを送信
+|   |       |   `-- send_mail_smtp.php         ... SMTP認証 でメールを送信
 |   |       `-- index.php
 |   `-- PHPMailer6.9
 |       `-- html
 |           |-- .mail-test
-|           |   |-- PHPMailer-6.9.3
+|           |   |-- libs
+|           |   |   |-- vendor/PHPMailer-6.9.3
+|           |   |   `-- loadDotEnv.php
+|           |   |-- _basicAuth.php
+|           |   |-- .env                       ... .env.sample をコピーして作成
+|           |   |-- .env.sample                ... メール送信関連の設定
 |           |   |-- .htaccess
 |           |   |-- index.php
-|           |   |-- send_mail_sendmail.php ... Sendmail でメールを送信
-|           |   `-- send_mail_smtp.php     ... SMTP認証 でメールを送信
+|           |   |-- send_mail_sendmail.php     ... Sendmail でメールを送信
+|           |   `-- send_mail_smtp.php         ... SMTP認証 でメールを送信
 |           `-- index.php
-|-- .env
-|-- .env.sample
+|-- .env                                       ... .env.sample をコピーして作成
+|-- .env.sample                                ... docker-compose 関連の設定
 `-- README.md
 ```
 - PHPMailer-x.x.x は [PHPMailer](https://github.com/PHPMailer/PHPMailer) から zip をダウンロードして展開
@@ -47,8 +57,11 @@
     .docker/scripts/start.ps1
     ```
     - [PHPMailer5.2](https://127.0.0.1:10443/)
+        - PHPMailer5.2 での メール送信
     - [PHPMailer6.9](https://127.0.0.1:20443/)
+        - PHPMailer6.9 での メール送信
     - [MailCatcher](http://127.0.0.1:1080/)
+        - MailCatcher での メール受信（smptで送信したものはキャッチされない）
 
 - docker コンテナを停止
     ```

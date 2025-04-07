@@ -1,16 +1,18 @@
 <?php
-require 'PHPMailer-6.9.3/src/Exception.php';
-require 'PHPMailer-6.9.3/src/PHPMailer.php';
-require 'PHPMailer-6.9.3/src/SMTP.php';
-
+require 'libs/vendor/PHPMailer-6.9.3/src/Exception.php';
+require 'libs/vendor/PHPMailer-6.9.3/src/PHPMailer.php';
+require 'libs/vendor/PHPMailer-6.9.3/src/SMTP.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+require 'libs/loadDotEnv.php';
+dotenv\loadDotEnv(__DIR__ . '/.env');
+
 require '_basicAuth.php'; //基本認証
 
-$defaultTo         = 'test.terimukuri@gmail.com';
-$defaultFrom       = "example@" . str_replace('www.', '', explode(':', $_SERVER['HTTP_HOST']))[0];
-$defaultReturnPath = '';
+$defaultTo         = dotenv\env('DEFAULT_TO', 'example@example.com');
+$defaultFrom       = dotenv\env('DEFAULT_FROM', "example@" . str_replace('www.', '', explode(':', $_SERVER['HTTP_HOST']))[0]);
+$defaultReturnPath = dotenv\env('DEFAULT_RETURN_PATH', "");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $to         = !empty($_POST['to']) ? $_POST['to'] : $defaultTo;

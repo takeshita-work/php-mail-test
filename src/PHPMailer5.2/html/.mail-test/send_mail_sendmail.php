@@ -1,12 +1,15 @@
 <?php
-require 'PHPMailer-5.2.28/class.phpmailer.php';
-require 'PHPMailer-5.2.28/class.smtp.php';
+require 'libs/vendor/PHPMailer-5.2.28/class.phpmailer.php';
+require 'libs/vendor/PHPMailer-5.2.28/class.smtp.php';
+
+require 'libs/loadDotEnv.php';
+dotenv\loadDotEnv(__DIR__ . '/.env');
 
 require '_basicAuth.php'; //基本認証
 
-$defaultTo         = 'test.terimukuri@gmail.com';
-$defaultFrom       = "example@" . str_replace('www.', '', explode(':', $_SERVER['HTTP_HOST']))[0];
-$defaultReturnPath = '';
+$defaultTo         = dotenv\env('DEFAULT_TO', 'example@example.com');
+$defaultFrom       = dotenv\env('DEFAULT_FROM', "example@" . str_replace('www.', '', explode(':', $_SERVER['HTTP_HOST']))[0]);
+$defaultReturnPath = dotenv\env('DEFAULT_RETURN_PATH', "");
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $to         = !empty($_POST['to']) ? $_POST['to'] : $defaultTo;
